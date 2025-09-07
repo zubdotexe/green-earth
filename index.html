@@ -36,27 +36,31 @@
                 <button class="btn btn-warning rounded-full text-[#15803D]">Plant a Tree</button>
             </div> -->
         <header>
+            <!-- navbar -->
             <nav class="bg-[#15803D] text-white py-4">
-                <div class="navbar max-w-screen-xl mx-auto [@media(max-width:400px)]:flex-col sm:flex-row">
-                    <div class="navbar-start">
+                <!-- max-w-screen-xl mx-auto -->
+                <div
+                    class="navbar sm:px-8 md:px-16 lg:px-32 flex-col sm:flex-row justify-center gap-2"
+                >
+                    <div class="navbar-start justify-center sm:justify-start">
                         <a class="cursor-pointer text-xl font-semibold"
                             >Green Earth</a
                         >
                     </div>
                     <div class="navbar-center hidden lg:flex">
-                        <ul class="menu menu-horizontal px-1 gap-2">
+                        <ul class="menu menu-horizontal px-1 gap-6">
                             <li class="cursor-pointer">About</li>
                             <li class="cursor-pointer">Gallery</li>
                             <li class="cursor-pointer">Plant a Tree</li>
                         </ul>
                     </div>
-                    <div class="navbar-end">
+                    <div class="navbar-end flex flex-col sm:flex-row">
                         <button
                             class="btn btn-warning rounded-full text-[#15803D]"
                         >
                             Plant a Tree
                         </button>
-                        <div class="dropdown dropdown-end">
+                        <div class="dropdown dropdown-bottom md:dropdown-end">
                             <div
                                 tabindex="0"
                                 role="button"
@@ -79,16 +83,55 @@
                             </div>
                             <ul
                                 tabindex="0"
-                                class="menu menu-sm dropdown-content bg-base-100 text-green-600 rounded-box z-1 mt-3 w-52 shadow"
+                                class="menu menu-sm dropdown-content bg-base-100 text-green-600 rounded-box z-1 mt-3 w-26 sm:w-52 shadow"
                             >
-                                <li class="cursor-pointer font-semibold hover:bg-gray-200 p-2 rounded-md">About</li>
-                                <li class="cursor-pointer font-semibold hover:bg-gray-200 p-2 rounded-md">Gallery</li>
-                                <li class="cursor-pointer font-semibold hover:bg-gray-200 p-2 rounded-md">Plant a Tree</li>
+                                <li
+                                    class="cursor-pointer font-semibold hover:bg-gray-200 p-2 rounded-md"
+                                >
+                                    About
+                                </li>
+                                <li
+                                    class="cursor-pointer font-semibold hover:bg-gray-200 p-2 rounded-md"
+                                >
+                                    Gallery
+                                </li>
+                                <li
+                                    class="cursor-pointer font-semibold hover:bg-gray-200 p-2 rounded-md"
+                                >
+                                    Plant a Tree
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </nav>
+            <!-- banner -->
+            <div
+                class="flex flex-col xl:flex-row justify-between items-center bg-[#CFF0DC] px-4 sm:px-8"
+            >
+                <img
+                    class=""
+                    src="./assets/hero-leaf1.png"
+                    alt="Leaf 1 image"
+                />
+                <div class="text-center">
+                    <h2 class="text-5xl font-bold mt-6">
+                        Plant a Tree, Grow a Future
+                    </h2>
+                    <p class="text-[#1F2937] text-2xl mt-2 mb-6">
+                        Join our mission to plant 1 million trees and make the
+                        Earth greener for future generations.
+                    </p>
+                    <button class="btn btn-warning rounded-full text-[#15803D]">
+                        Get Involved
+                    </button>
+                </div>
+                <img
+                    class=""
+                    src="./assets/hero-leaf2.png"
+                    alt="Leaf 2 image"
+                />
+            </div>
         </header>
     </body>
 </html>
