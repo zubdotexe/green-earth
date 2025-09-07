@@ -1,21 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Earth</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Green Earth</title>
 
-    <!-- font -->
-    <link rel="stylesheet" href="./styles/style.css">
+        <!-- font -->
+        <link rel="stylesheet" href="./styles/style.css" />
 
-    <!-- font awesome cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- font awesome cdn -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
 
-    <!-- tailwind + daisyUI -->
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
-<body>
-    <h1>Starting the proj...</h1>
-</body>
+        <!-- tailwind + daisyUI -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/daisyui@5"
+            rel="stylesheet"
+            type="text/css"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    </head>
+    <body>
+        <!-- <div class="flex justify-between items-center max-w-screen-xl mx-auto">
+                <h1 class="font-semibold text-xl">Green Earth</h1>
+                <ul class="flex justify-between gap-2">
+                    <li class="cursor-pointer">About</li>
+                    <li class="cursor-pointer">Gallery</li>
+                    <li class="cursor-pointer">Plant a Tree</li>
+                </ul>
+                <button class="btn btn-warning rounded-full text-[#15803D]">Plant a Tree</button>
+            </div> -->
+        <header>
+            <nav class="bg-[#15803D] text-white py-4">
+                <div class="navbar max-w-screen-xl mx-auto [@media(max-width:400px)]:flex-col sm:flex-row">
+                    <div class="navbar-start">
+                        <a class="cursor-pointer text-xl font-semibold"
+                            >Green Earth</a
+                        >
+                    </div>
+                    <div class="navbar-center hidden lg:flex">
+                        <ul class="menu menu-horizontal px-1 gap-2">
+                            <li class="cursor-pointer">About</li>
+                            <li class="cursor-pointer">Gallery</li>
+                            <li class="cursor-pointer">Plant a Tree</li>
+                        </ul>
+                    </div>
+                    <div class="navbar-end">
+                        <button
+                            class="btn btn-warning rounded-full text-[#15803D]"
+                        >
+                            Plant a Tree
+                        </button>
+                        <div class="dropdown dropdown-end">
+                            <div
+                                tabindex="0"
+                                role="button"
+                                class="btn btn-ghost lg:hidden"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M4 6h16M4 12h8m-8 6h16"
+                                    />
+                                </svg>
+                            </div>
+                            <ul
+                                tabindex="0"
+                                class="menu menu-sm dropdown-content bg-base-100 text-green-600 rounded-box z-1 mt-3 w-52 shadow"
+                            >
+                                <li class="cursor-pointer font-semibold hover:bg-gray-200 p-2 rounded-md">About</li>
+                                <li class="cursor-pointer font-semibold hover:bg-gray-200 p-2 rounded-md">Gallery</li>
+                                <li class="cursor-pointer font-semibold hover:bg-gray-200 p-2 rounded-md">Plant a Tree</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </body>
 </html>
