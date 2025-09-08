@@ -1,4 +1,5 @@
 const categories = document.getElementById("categories");
+const cardsContainer = document.getElementById("cards-container");
 
 const manageSpinner = (flag, selector) => {
     console.log("", document.querySelector(`${selector}`));
@@ -56,8 +57,6 @@ const loadBtnCat = () => {
 };
 
 loadBtnCat();
-
-const cardsContainer = document.getElementById("cards-container");
 
 const displayTreesData = (treesArr) => {
     const tempContainer = document.createElement("div");
@@ -135,7 +134,58 @@ categories.addEventListener("click", (e) => {
     }
 });
 
-document.querySelector("#cards-container").addEventListener("click", (e) => {
+const displayPlantDetails = (plantDetails) => {
+    document.querySelector(".modal-box").innerHTML = `
+        <div class="mb-6 h-44 overflow-hidden rounded-lg">
+            <img class="object-cover" src="${plantDetails.image}" alt="img" />
+        </div>
+        <h3 class="text-lg font-bold">${plantDetails.name}</h3>
+        <p class="py-4 text-justify"><span class="font-semibold">Description</span>: ${plantDetails.description}</p>
+        <div class="flex flex-wrap justify-between">
+            <p><span class="font-semibold">Category</span>: ${plantDetails.category}</p>
+            <p><span class="font-semibold">Price</span>: ৳<span>${plantDetails.price}</span></p>
+        </div>
+        <div class="modal-action">
+        <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn btn-success">Done</button>
+        </form>
+        </div>
+    `;
+};
+
+const loadPlantDetails = (id) => {
+    const plantDetailModal = document.getElementById("my_modal_5");
+    plantDetailModal.showModal();
+
+    document.querySelector(".modal-box").innerHTML = `
+        <div class="bg-white rounded-lg flex justify-center items-center">
+                        <span
+                            class="loading loading-spinner text-success"
+                        ></span>
+                    </div>
+    `;
+    const url = `https://openapi.programming-hero.com/api/plant/${id}`;
+
+    fetch(url)
+        .then((res) => res.json())
+        .then((data) => displayPlantDetails(data.plants));
+};
+
+const processId = (card) => {
+    return card.id.split("-").pop();
+};
+
+cardsContainer.addEventListener("click", (e) => {
+    const treeName = e.target.closest("h3");
+    if (treeName) {
+        // console.log('tree name clicked', e.target);
+        const card = e.target.closest("div[id]");
+        loadPlantDetails(processId(card));
+    }
+});
+
+cardsContainer.addEventListener("click", (e) => {
     const btnCart = e.target.closest(".btn-cart");
     if (btnCart) {
         console.log("clicked", e.target);
