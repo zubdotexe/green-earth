@@ -43,13 +43,77 @@ const loadBtnCat = () => {
 
 loadBtnCat();
 
+const displayTreesData = (treesArr) => {
+    // console.log('', treesArr);
+
+    const tempContainer = document.createElement("div");
+
+    treesArr.forEach((treeObj) => {
+        console.log('obj', treeObj);
+        const tempDiv = document.createElement("div");
+        console.log('', treeObj.image);
+        
+        tempDiv.innerHTML = `
+            <!-- card -->
+            <div class="bg-white p-4 rounded-lg h-full flex flex-col justify-between">
+                <div class="h-40 overflow-hidden rounded-lg">
+                    <img class="object-cover" src="${treeObj.image}" alt="img" />
+                </div>
+                <div class="my-4">
+                    <h3 class="font-semibold">${treeObj.name}</h3>
+                    <p class="text-[12px]">
+                        ${treeObj.description}
+                    </p>
+                    <div
+                        class="flex flex-wrap justify-between items-center mt-2"
+                    >
+                        <button
+                            class="btn btn-soft cursor-default rounded-full bg-[#DCFCE7] text-[#15803D]"
+                        >
+                            ${treeObj.category}
+                        </button>
+                        <p class="font-bold">৳<span>${treeObj.price}</span></p>
+                    </div>
+                </div>
+                <button
+                    class="btn btn-active btn-success rounded-full bg-[#15803D] hover:bg-[#166534] text-white w-full"
+                >
+                    Add to Cart
+                </button>
+            </div>
+        `;
+
+        tempContainer.append(tempDiv);
+    });
+
+    document.getElementById("cards-container").innerHTML = tempContainer.innerHTML;
+}
+
+const loadTreesData = (id) => {
+    const allPlantsUrl = "https://openapi.programming-hero.com/api/plants";
+    const singleCatUrl = `https://openapi.programming-hero.com/api/category/${id}`;
+    let url;
+
+    if(parseInt(id) === 0) {
+       url = allPlantsUrl; 
+    }
+    else {
+        url = singleCatUrl
+    }
+
+    fetch(url)
+        .then((res) => res.json())
+        .then((data) => displayTreesData(data.plants));
+}
+
 const activateBtnCat = (btnCat) => {
     categories.querySelectorAll("div").forEach((catDiv) => {
-        console.log(catDiv.querySelector("button"));
+        // console.log(catDiv.querySelector("button"));
         catDiv.querySelector("button").classList.remove("btnActiveCat");
     });
 
     btnCat.classList.add("btnActiveCat");
+    loadTreesData(btnCat.id);
 };
 
 categories.addEventListener("click", (e) => {
