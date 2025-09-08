@@ -193,11 +193,11 @@ let products = [];
 
 const calculatePrice = () => {
     let totalPrice = 0;
-    console.log('inside calcPrice', products);
-    
+    console.log("inside calcPrice", products);
+
     products.forEach((product) => {
         totalPrice += product.price * product.quantity;
-    })
+    });
 
     // console.log('', totalPrice);
     document.querySelector("#total-price").innerText = totalPrice;
@@ -209,20 +209,24 @@ const addProduct = (card) => {
     const treePrice = processPrice(card.querySelectorAll("p")[1].innerText);
     const treeId = processId(card);
 
+    alert(`${treeName} has been added to the cart.`);
+
     products.forEach((product) => {
         if (product.id === treeId) {
-            console.log('matched');
+            console.log("matched");
             product.quantity = parseInt(product.quantity) + 1;
-            console.log('qty', product.quantity);
-            
-            document.querySelector(`#prod-${treeId}`).querySelector(".tree-qty").innerText = product.quantity;
-            console.log('', card);
-            
+            console.log("qty", product.quantity);
+
+            document
+                .querySelector(`#prod-${treeId}`)
+                .querySelector(".tree-qty").innerText = product.quantity;
+            console.log("", card);
+
             flag = true;
         }
     });
 
-    console.log('products 1', products);
+    console.log("products 1", products);
 
     if (flag) {
         return;
@@ -232,10 +236,10 @@ const addProduct = (card) => {
         id: treeId,
         quantity: 1,
         price: treePrice,
-    }
+    };
 
     products.push(obj);
-    
+
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = `
         <div
@@ -260,12 +264,12 @@ const addProduct = (card) => {
 };
 
 const removeProduct = (id) => {
-    products = products.filter(product => parseInt(product.id) !== id);
+    products = products.filter((product) => parseInt(product.id) !== id);
+    document.querySelector(`#prod-${id}`).remove();
     calculatePrice();
 };
 
 const displayProducts = (card) => {
-    
     // const treeName = card.querySelector("h3").innerText;
     // const treePrice = processPrice(card.querySelectorAll("p")[1].innerText);
     // const treeId = processId(card);
@@ -293,7 +297,7 @@ const displayProducts = (card) => {
     // document.querySelector("#prod-container").append(tempDiv);
     addProduct(card);
     calculatePrice();
-}
+};
 
 cardsContainer.addEventListener("click", (e) => {
     const btnCart = e.target.closest(".btn-cart");
