@@ -1,29 +1,44 @@
 const categories = document.getElementById("categories");
 
-const progress = (flag) => {};
+const manageSpinner = (flag) => {
+    if (flag) {
+        document
+            .querySelector(".spinner-container")
+            .classList.replace("hidden", "flex");
+    } else {
+        document
+            .querySelector(".spinner-container")
+            .classList.replace("flex", "hidden");
+    }
+};
+
+const displayBtnCat = (catArr) => {
+    let btnContainer = document.createElement("div");
+    btnContainer.innerHTML = `
+    <div>
+        <button id="0" class="w-full cursor-pointer hover:bg-[#15803D] hover:text-white p-2 text-left rounded-sm" href="">All Plants</button>
+    </div>
+`;
+    catArr["categories"].forEach((catObj) => {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = `
+        <button id="${catObj["id"]}" class="w-full cursor-pointer hover:bg-[#15803D] text-[#1F2937] hover:text-white p-2 text-left rounded-sm" href="">${catObj["category_name"]}</button>
+    `;
+
+        btnContainer.append(tempDiv);
+    });
+
+    categories.innerHTML = btnContainer.innerHTML;
+
+    manageSpinner(false);
+};
 
 const loadBtnCat = () => {
+    manageSpinner(true);
     const url = "https://openapi.programming-hero.com/api/categories";
     fetch(url)
         .then((res) => res.json())
-        .then((catArr) => {
-            let btnContainer = document.createElement("div");
-            btnContainer.innerHTML = `
-        <div>
-            <button id="0" class="w-full cursor-pointer hover:bg-[#15803D] hover:text-white p-2 text-left rounded-sm" href="">All Plants</button>
-        </div>
-    `;
-            catArr["categories"].forEach((catObj) => {
-                const tempDiv = document.createElement("div");
-                tempDiv.innerHTML = `
-            <button id="${catObj["id"]}" class="w-full cursor-pointer hover:bg-[#15803D] text-[#1F2937] hover:text-white p-2 text-left rounded-sm" href="">${catObj["category_name"]}</button>
-        `;
-
-                btnContainer.append(tempDiv);
-            });
-
-            categories.innerHTML = btnContainer.innerHTML;
-        });
+        .then((catArr) => displayBtnCat(catArr));
 };
 
 loadBtnCat();
