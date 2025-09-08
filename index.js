@@ -148,7 +148,7 @@ const displayPlantDetails = (plantDetails) => {
         <div class="modal-action">
         <form method="dialog">
             <!-- if there is a button in form, it will close the modal -->
-            <button class="btn btn-success">Done</button>
+            <button class="btn btn-success bg-[#15803D] text-white">Done</button>
         </form>
         </div>
     `;
@@ -185,9 +185,120 @@ cardsContainer.addEventListener("click", (e) => {
     }
 });
 
+const processPrice = (price) => {
+    return price.split("৳").pop();
+};
+
+let products = [];
+
+const calculatePrice = () => {
+    let totalPrice = 0;
+    console.log('inside calcPrice', products);
+    
+    products.forEach((product) => {
+        totalPrice += product.price * product.quantity;
+    })
+
+    // console.log('', totalPrice);
+    document.querySelector("#total-price").innerText = totalPrice;
+};
+
+const addProduct = (card) => {
+    let flag;
+    const treeName = card.querySelector("h3").innerText;
+    const treePrice = processPrice(card.querySelectorAll("p")[1].innerText);
+    const treeId = processId(card);
+
+    products.forEach((product) => {
+        if (product.id === treeId) {
+            console.log('matched');
+            product.quantity = parseInt(product.quantity) + 1;
+            console.log('qty', product.quantity);
+            
+            document.querySelector(`#prod-${treeId}`).querySelector(".tree-qty").innerText = product.quantity;
+            console.log('', card);
+            
+            flag = true;
+        }
+    });
+
+    console.log('products 1', products);
+
+    if (flag) {
+        return;
+    }
+
+    const obj = {
+        id: treeId,
+        quantity: 1,
+        price: treePrice,
+    }
+
+    products.push(obj);
+    
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = `
+        <div
+            id="prod-${treeId}" class="bg-[#F0FDF4] hover:bg-[#e9faee] rounded-lg py-2 px-3 flex justify-between items-center"
+        >
+            <div class="space-y-1">
+                <h3 class="font-semibold">${treeName}</h3>
+                <p class="text-[#8C8C8C]">
+                    ৳<span>${treePrice}</span> x <span class="tree-qty">1</span>
+                </p>
+            </div>
+            <p
+                onclick="removeProduct(${treeId})"
+                class="text-[#8C8C8C] text-xl cursor-pointer"
+            >
+                x
+            </p>
+        </div>
+    `;
+
+    document.querySelector("#prod-container").append(tempDiv);
+};
+
+const removeProduct = (id) => {
+    products = products.filter(product => parseInt(product.id) !== id);
+    calculatePrice();
+};
+
+const displayProducts = (card) => {
+    
+    // const treeName = card.querySelector("h3").innerText;
+    // const treePrice = processPrice(card.querySelectorAll("p")[1].innerText);
+    // const treeId = processId(card);
+
+    // const tempDiv = document.createElement("div");
+    // tempDiv.innerHTML = `
+    //     <div
+    //         class="bg-[#F0FDF4] hover:bg-[#e9faee] rounded-lg py-2 px-3 flex justify-between items-center"
+    //     >
+    //         <div class="space-y-1">
+    //             <h3 class="font-semibold">${treeName}</h3>
+    //             <p class="text-[#8C8C8C]">
+    //                 ৳<span>${treePrice}</span> x <span id="tree-qty">1</span>
+    //             </p>
+    //         </div>
+    //         <p
+    //             onclick="removeProduct(${treeId})"
+    //             class="text-[#8C8C8C] text-xl cursor-pointer"
+    //         >
+    //             x
+    //         </p>
+    //     </div>
+    // `;
+
+    // document.querySelector("#prod-container").append(tempDiv);
+    addProduct(card);
+    calculatePrice();
+}
+
 cardsContainer.addEventListener("click", (e) => {
     const btnCart = e.target.closest(".btn-cart");
     if (btnCart) {
-        console.log("clicked", e.target);
+        const card = e.target.closest("div[id]");
+        displayProducts(card);
     }
 });
