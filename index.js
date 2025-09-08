@@ -1,15 +1,28 @@
 const categories = document.getElementById("categories");
 
-const manageSpinner = (flag) => {
+const manageSpinner = (flag, selector) => {
+    console.log("", document.querySelector(`${selector}`));
     if (flag) {
         document
-            .querySelector(".spinner-container")
+            .querySelector(`${selector}`)
             .classList.replace("hidden", "flex");
     } else {
         document
-            .querySelector(".spinner-container")
+            .querySelector(`${selector}`)
             .classList.replace("flex", "hidden");
     }
+};
+
+const activateBtnCat = (btnCat) => {
+    categories.querySelectorAll("div").forEach((catDiv) => {
+        // console.log(catDiv.querySelector("button"));
+        catDiv.querySelector("button").classList.remove("btnActiveCat");
+    });
+
+    btnCat.classList.add("btnActiveCat");
+    console.log("", btnCat);
+
+    loadTreesData(btnCat.id);
 };
 
 const displayBtnCat = (catArr) => {
@@ -30,11 +43,12 @@ const displayBtnCat = (catArr) => {
 
     categories.innerHTML = btnContainer.innerHTML;
 
-    manageSpinner(false);
+    manageSpinner(false, ".cb-spinner");
+    activateBtnCat(categories.querySelector("button"));
 };
 
 const loadBtnCat = () => {
-    manageSpinner(true);
+    manageSpinner(true, ".cb-spinner");
     const url = "https://openapi.programming-hero.com/api/categories";
     fetch(url)
         .then((res) => res.json())
@@ -43,24 +57,24 @@ const loadBtnCat = () => {
 
 loadBtnCat();
 
-const displayTreesData = (treesArr) => {
-    // console.log('', treesArr);
+const cardsContainer = document.getElementById("cards-container");
 
+const displayTreesData = (treesArr) => {
     const tempContainer = document.createElement("div");
 
     treesArr.forEach((treeObj) => {
-        console.log('obj', treeObj);
+        // console.log('obj', treeObj);
         const tempDiv = document.createElement("div");
-        console.log('', treeObj.image);
-        
+        // console.log('', treeObj.image);
+
         tempDiv.innerHTML = `
             <!-- card -->
-            <div class="bg-white p-4 rounded-lg h-full flex flex-col justify-between">
+            <div id="tree-${treeObj.id}" class="bg-white p-4 rounded-lg">
                 <div class="h-40 overflow-hidden rounded-lg">
                     <img class="object-cover" src="${treeObj.image}" alt="img" />
                 </div>
-                <div class="my-4">
-                    <h3 class="font-semibold">${treeObj.name}</h3>
+                <div class="my-4 space-y-2">
+                    <h3 class="font-semibold cursor-pointer">${treeObj.name}</h3>
                     <p class="text-[12px]">
                         ${treeObj.description}
                     </p>
@@ -76,7 +90,7 @@ const displayTreesData = (treesArr) => {
                     </div>
                 </div>
                 <button
-                    class="btn btn-active btn-success rounded-full bg-[#15803D] hover:bg-[#166534] text-white w-full"
+                    class="btn-cart btn btn-active btn-success rounded-full bg-[#15803D] hover:bg-[#166534] text-white w-full"
                 >
                     Add to Cart
                 </button>
@@ -86,39 +100,44 @@ const displayTreesData = (treesArr) => {
         tempContainer.append(tempDiv);
     });
 
-    document.getElementById("cards-container").innerHTML = tempContainer.innerHTML;
-}
+    cardsContainer.innerHTML = tempContainer.innerHTML;
+    // manageSpinner(false, ".cc-spinner");
+};
 
 const loadTreesData = (id) => {
+    cardsContainer.innerHTML = `
+        <div class="cc-spinner flex col-span-3 justify-center">
+            <span
+                class="loading loading-spinner text-success"
+            ></span>
+        </div>
+    `;
+
     const allPlantsUrl = "https://openapi.programming-hero.com/api/plants";
     const singleCatUrl = `https://openapi.programming-hero.com/api/category/${id}`;
     let url;
 
-    if(parseInt(id) === 0) {
-       url = allPlantsUrl; 
-    }
-    else {
-        url = singleCatUrl
+    if (parseInt(id) === 0) {
+        url = allPlantsUrl;
+    } else {
+        url = singleCatUrl;
     }
 
     fetch(url)
         .then((res) => res.json())
         .then((data) => displayTreesData(data.plants));
-}
-
-const activateBtnCat = (btnCat) => {
-    categories.querySelectorAll("div").forEach((catDiv) => {
-        // console.log(catDiv.querySelector("button"));
-        catDiv.querySelector("button").classList.remove("btnActiveCat");
-    });
-
-    btnCat.classList.add("btnActiveCat");
-    loadTreesData(btnCat.id);
 };
 
 categories.addEventListener("click", (e) => {
     const btnCat = e.target.closest("button");
     if (btnCat) {
         activateBtnCat(btnCat);
+    }
+});
+
+document.querySelector("#cards-container").addEventListener("click", (e) => {
+    const btnCart = e.target.closest(".btn-cart");
+    if (btnCart) {
+        console.log("clicked", e.target);
     }
 });
