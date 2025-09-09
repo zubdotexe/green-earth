@@ -64,8 +64,11 @@ const displayTreesData = (treesArr) => {
         tempDiv.innerHTML = `
             <!-- card -->
             <div id="tree-${treeObj.id}" class="bg-white p-4 rounded-lg">
-                <div class="h-40 overflow-hidden rounded-lg">
-                    <img class="object-cover" src="${treeObj.image}" alt="img" />
+                <div class="h-40 overflow-hidden rounded-lg flex justify-center items-center">
+                    <span
+                        class="loading loading-spinner text-success"
+                    ></span>
+                    <img class="object-cover" src="${treeObj.image}" alt="${treeObj.name} image" />
                 </div>
                 <div class="my-4 space-y-2">
                     <h3 class="font-semibold cursor-pointer">${treeObj.name}</h3>
@@ -90,6 +93,12 @@ const displayTreesData = (treesArr) => {
                 </button>
             </div>
         `;
+
+        const img = tempDiv.querySelector("img");
+        img.onload = () => {
+            img.classList.remove("hidden");
+            tempDiv.querySelector(".loading-spinner").classList.add("hidden");
+        };
 
         tempContainer.append(tempDiv);
     });
@@ -130,9 +139,13 @@ categories.addEventListener("click", (e) => {
 });
 
 const displayPlantDetails = (plantDetails) => {
-    document.querySelector(".modal-box").innerHTML = `
-        <div class="mb-6 h-44 overflow-hidden rounded-lg">
-            <img class="object-cover" src="${plantDetails.image}" alt="img" />
+    const modal = document.querySelector(".modal-box");
+    modal.innerHTML = `
+        <div class="mb-6 h-44 overflow-hidden rounded-lg flex justify-center items-center">
+            <span
+                class="loading loading-spinner text-success"
+            ></span>
+            <img class="hidden object-cover" src="${plantDetails.image}" alt="${plantDetails.name} image" />
         </div>
         <h3 class="text-lg font-bold">${plantDetails.name}</h3>
         <p class="py-4 text-justify"><span class="font-semibold">Description</span>: ${plantDetails.description}</p>
@@ -147,6 +160,12 @@ const displayPlantDetails = (plantDetails) => {
         </form>
         </div>
     `;
+
+    const img = modal.querySelector("img");
+    img.onload = () => {
+        img.classList.remove("hidden");
+        modal.querySelector(".loading-spinner").classList.add("hidden");
+    }
 };
 
 const loadPlantDetails = (id) => {
@@ -155,10 +174,10 @@ const loadPlantDetails = (id) => {
 
     document.querySelector(".modal-box").innerHTML = `
         <div class="bg-white rounded-lg flex justify-center items-center">
-                        <span
-                            class="loading loading-spinner text-success"
-                        ></span>
-                    </div>
+            <span
+                class="loading loading-spinner text-success"
+            ></span>
+        </div>
     `;
     const url = `https://openapi.programming-hero.com/api/plant/${id}`;
 
@@ -257,31 +276,6 @@ const removeProduct = (id) => {
 };
 
 const displayProducts = (card) => {
-    // const treeName = card.querySelector("h3").innerText;
-    // const treePrice = processPrice(card.querySelectorAll("p")[1].innerText);
-    // const treeId = processId(card);
-
-    // const tempDiv = document.createElement("div");
-    // tempDiv.innerHTML = `
-    //     <div
-    //         class="bg-[#F0FDF4] hover:bg-[#e9faee] rounded-lg py-2 px-3 flex justify-between items-center"
-    //     >
-    //         <div class="space-y-1">
-    //             <h3 class="font-semibold">${treeName}</h3>
-    //             <p class="text-[#8C8C8C]">
-    //                 ৳<span>${treePrice}</span> x <span id="tree-qty">1</span>
-    //             </p>
-    //         </div>
-    //         <p
-    //             onclick="removeProduct(${treeId})"
-    //             class="text-[#8C8C8C] text-xl cursor-pointer"
-    //         >
-    //             x
-    //         </p>
-    //     </div>
-    // `;
-
-    // document.querySelector("#prod-container").append(tempDiv);
     addProduct(card);
     calculatePrice();
 };
