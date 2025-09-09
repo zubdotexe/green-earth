@@ -11,3 +11,16 @@
   background-color: #15803D;
   color: white;
 }
+
+.bg-double-leaf {
+  background-image: url('../assets/hero-leaf1.png'), url('../assets/hero-leaf2.png');
+  background-position: left center, right center;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 30%, 30%;
+}
+
+@media (min-width: 1100px) {
+  .bg-double-leaf {
+    background-size: contain, contain;
+  }
+}

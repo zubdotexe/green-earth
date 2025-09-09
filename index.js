@@ -2,7 +2,6 @@ const categories = document.getElementById("categories");
 const cardsContainer = document.getElementById("cards-container");
 
 const manageSpinner = (flag, selector) => {
-    console.log("", document.querySelector(`${selector}`));
     if (flag) {
         document
             .querySelector(`${selector}`)
@@ -16,12 +15,10 @@ const manageSpinner = (flag, selector) => {
 
 const activateBtnCat = (btnCat) => {
     categories.querySelectorAll("div").forEach((catDiv) => {
-        // console.log(catDiv.querySelector("button"));
         catDiv.querySelector("button").classList.remove("btnActiveCat");
     });
 
     btnCat.classList.add("btnActiveCat");
-    console.log("", btnCat);
 
     loadTreesData(btnCat.id);
 };
@@ -62,9 +59,7 @@ const displayTreesData = (treesArr) => {
     const tempContainer = document.createElement("div");
 
     treesArr.forEach((treeObj) => {
-        // console.log('obj', treeObj);
         const tempDiv = document.createElement("div");
-        // console.log('', treeObj.image);
 
         tempDiv.innerHTML = `
             <!-- card -->
@@ -179,7 +174,6 @@ const processId = (card) => {
 cardsContainer.addEventListener("click", (e) => {
     const treeName = e.target.closest("h3");
     if (treeName) {
-        // console.log('tree name clicked', e.target);
         const card = e.target.closest("div[id]");
         loadPlantDetails(processId(card));
     }
@@ -193,13 +187,11 @@ let products = [];
 
 const calculatePrice = () => {
     let totalPrice = 0;
-    console.log("inside calcPrice", products);
 
     products.forEach((product) => {
         totalPrice += product.price * product.quantity;
     });
 
-    // console.log('', totalPrice);
     document.querySelector("#total-price").innerText = totalPrice;
 };
 
@@ -213,20 +205,15 @@ const addProduct = (card) => {
 
     products.forEach((product) => {
         if (product.id === treeId) {
-            console.log("matched");
             product.quantity = parseInt(product.quantity) + 1;
-            console.log("qty", product.quantity);
 
             document
                 .querySelector(`#prod-${treeId}`)
                 .querySelector(".tree-qty").innerText = product.quantity;
-            console.log("", card);
 
             flag = true;
         }
     });
-
-    console.log("products 1", products);
 
     if (flag) {
         return;
